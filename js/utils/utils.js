@@ -1,5 +1,6 @@
 'use strict'
 
+// Loads a given URL, used to load the shaders from file
 function loadExternalFile(url) {
     let req = new XMLHttpRequest();
     req.open("GET", url, false);
@@ -7,15 +8,19 @@ function loadExternalFile(url) {
     return (req.status == 200) ? req.responseText : null;
 }
 
+// Converts a hex color string to a normalized RGBA array
 function hex2rgb(hex) {
     let rgb = hex.match(/\w\w/g).map(x => parseInt(x, 16) / 255);
     return [rgb[0], rgb[1], rgb[2]]
 }
 
+// Converts degrees to radians
 function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
 
+
+// Returns the mouse coordinates relative to the canvas
 function getRelativeMousePosition(event) {
     let target = event.target
     if (target.id != 'canvas') {
@@ -39,3 +44,4 @@ export {
     deg2rad,
     getRelativeMousePosition
 }
+

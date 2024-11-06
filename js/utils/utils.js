@@ -19,7 +19,6 @@ function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
 
-
 // Returns the mouse coordinates relative to the canvas
 function getRelativeMousePosition(event) {
     let target = event.target

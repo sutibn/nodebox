@@ -54,8 +54,7 @@ class Shader {
         this.gl.uniform2fv( this.getUniformLocation(name), value)
     }
 
-    setUniform3f(name, value)
-    {
+    setUniform3f(name, value) {
         this.gl.uniform3fv( this.getUniformLocation(name), value)
     }
 

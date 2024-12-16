@@ -12,7 +12,7 @@ class App {
             "contextmenu", event => event.preventDefault())
         this.gl = this.init()
         this.shader = new Shader(this.gl,
-            "../../shaders/vertex.glsl", "../../shaders/fragment.glsl")
+            "../../shader/vert.glsl", "../../shader/frag.glsl")
         this.resize()
         this.w = this.canvas.width
         this.h = this.canvas.height

@@ -1,19 +1,14 @@
 'use strict'
 
-function getMousePos(event) {
-    let target = event.target
-    if (target.id != 'canvas') {
-        return {
-            x: -Infinity,
-            y: +Infinity,
-        }
-    }
-
-    target = target || event.target;
-    let rect = target.getBoundingClientRect();
+function getMousePos(e) {
+    let target = e.target
+    if (target.id != 'canvas')
+        return { x: null, y: null }
+    target = target || e.target
+    let rect = target.getBoundingClientRect()
     return {
-        x: event.clientX - rect.left,
-        y: event.clientY - rect.top,
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
     }
 }
 
@@ -26,42 +21,38 @@ class Input {
         this.mouseDown = {}
         this.mouseClick = {}
 
-        this.mouseX = 0
-        this.mouseY = 0
+        this.x = 0
+        this.y = 0
 
         this.lastX = 0
         this.lastY = 0
-        
-        window.onkeyup = (e) =>
-            this.keyDown[e.key] = false
 
+        window.onkeyup = (e) => this.keyDown[e.key] = false
         window.onkeydown = (e) => {
             this.keyDown[e.key] = true
             this.keyPress[e.key] = true
             this.lastKey = e.key
         }
-        
-        window.onmouseup = (e) =>
-            this.mouseDown[e.button] = false
 
+        window.onmouseup = (e) => this.mouseDown[e.button] = false
         window.onmousedown = (e) => {
             this.mouseDown[e.button] = true
             this.mouseClick[e.button] = true
         }
-        
+
         window.onmousemove = (e) => {
             const pos = getMousePos(e)
-            this.lastX = this.mouseX
-            this.lastY = this.mouseY
+            this.lastX = this.x
+            this.lastY = this.y
             if (!(pos.x == null || pos.y == null)) {
-                this.mouseX = pos.x
-                this.mouseY = pos.y
+                this.x = pos.x
+                this.y = pos.y
             }
         }
-        
+
         setInterval(() => {
-            this.lastX = this.mouseX
-            this.lastY = this.mouseY
+            this.lastX = this.x
+            this.lastY = this.y
         }, 50)
     }
 
@@ -72,32 +63,32 @@ class Input {
             this.mouseClick[key] = false
     }
 
-    getMouseDx() { 
-        return this.mouseX - this.lastX
+    getDx() {
+        return this.x - this.lastX
     }
 
-    getMouseDy() {
-        return this.mouseY - this.lastY
+    getDy() {
+        return this.y - this.lastY
     }
 
-    getLastKeyPress() {
+    getLastKey() {
         return this.lastKey
     }
 
-    isKeyDown(x) {
-        return this.keyDown[x]
+    isKeyDown(key) {
+        return this.keyDown[key]
     }
 
-    isKeyPress(x) {
-        return this.keyPress[x]
+    isKeyPress(key) {
+        return this.keyPress[key]
     }
 
-    isMouseDown(x) {
-        return this.mouseDown[x]
+    isMouseDown(button) {
+        return this.mouseDown[button]
     }
-        
-    isMouseClick(x) {
-        return this.mouseClick[x]
+
+    isMouseClick(button) {
+        return this.mouseClick[button]
     }
 }
 

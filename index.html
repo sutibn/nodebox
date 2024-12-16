@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Canvas</title>
+    <title> nodeBox </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -11,27 +11,52 @@
     <div id="app">
 
         <div id="header-container">
-            <h3>
-                <a>Canvas</a> | <a href="https://github.com/sutibn/nodebox" target="_blank" rel="noopener noreferrer">sutibn</a>
-            </h3>
+            <h1> nodeBox | <a href="https://github.com/sutibn/nodebox" target="_blank"> sutibn </a></h1>
         </div>
 
         <div class="settings-container">
+
             <div class="setting">
+                <h3> Scene </h3>
                 <div class="setting-item-container">
-                    <div id="clearCanvas" class="setting-item inactive">[X] Clean</div>
+                    <div id="openfileAction" class="setting-item inactive">
+                        <input id="openfileActionInput" type="file" multiple="false" accept="application/json">
+                    </div>
                 </div>
             </div>
+
+            <div class="setting">
+                <h3> Mode </h3>
+                <div class="setting-item-container">
+                    <div id="modeDot" class="setting-item inactive"> [A] Point </div>
+                    <div id="modeTri" class="setting-item inactive"> [S] Triangle </div>
+                </div>
+            </div>
+
+            <div class="setting">
+                <h3> Control </h3>
+                <div class="setting-item-container">
+                    <div id="controlCamera" class="setting-item inactive"> Camera </div>
+                    <div id="controlNode"   class="setting-item inactive"> [Hold Q] Node </div>
+                </div>
+            </div>
+
+            <div class="setting">
+                <h3> Node </h3>
+                <div class="setting-item-container">
+                    <select id="selectNode" disabled></select>
+                </div>
+            </div>
+
         </div>
 
         <div id="canvas-container">
             <canvas id="canvas"></canvas>
         </div>
-
     </div>
 
-    <noscript>JavaScript required</noscript>
+    <noscript>Javascript required</noscript>
     <script type="module" src="js/main.js"></script>
+
 </body>
 </html>
-

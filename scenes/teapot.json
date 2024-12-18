@@ -1,0 +1,19 @@
+{
+    "models": [
+        {
+            "name": "teapot",
+            "obj": "./models/teapot.obj"
+        }
+    ],
+    "scenegraph": {
+        "name": "model_node",
+        "type": "model",
+        "content": "teapot",
+        "transformation": {
+            "translation": [0, 0, 0],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+        },
+        "children": []
+    }
+}

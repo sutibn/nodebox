@@ -1,0 +1,19 @@
+{
+    "models": [
+        {
+            "name": "buddha",
+            "obj": "./models/buddha.obj"
+        }
+    ],
+    "scenegraph": {
+        "name": "model_node",
+        "type": "model",
+        "content": "buddha",
+        "transformation": {
+            "translation": [0, 0, 0],
+            "rotation": [0, 90, 0],
+            "scale": [1, 1, 1]
+        },
+        "children": []
+    }
+}

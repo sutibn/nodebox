@@ -1,0 +1,59 @@
+{
+    "models": [
+        {
+            "name": "teapot",
+            "obj": "./models/teapot.obj"
+        },
+        {
+            "name": "lucy",
+            "obj": "./models/lucy.obj"
+        },
+        {
+            "name": "platform",
+            "obj": "./models/platform.obj"
+        }
+    ],
+    "scenegraph": {
+        "name": "root",
+        "type": "node",
+        "transformation": {
+            "translation": [0, 0, 0],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+        },
+        "children": [
+            {
+                "name": "platforn_node",
+                "type": "model",
+                "content": "platform",
+                "transformation": {
+                    "translation": [0, -1, 0],
+                    "rotation": [0, 0, 0],
+                    "scale": [1, 1, 1]
+                },
+                "children": []
+            },
+            {
+                "name": "lucy_node",
+                "type": "model",
+                "content": "lucy",
+                "transformation": {
+                    "translation": [0, 0.025, 0],
+                    "rotation": [0, 90, 0],
+                    "scale": [1, 1, 1]
+                },
+                "children": [{
+                    "name": "teapot_node",
+                    "type": "model",
+                    "content": "teapot",
+                    "transformation": {
+                        "translation": [-0.35, -0.02, 0.25],
+                        "rotation": [-60, 210, 65],
+                        "scale": [0.2, 0.2, 0.2]
+                    },
+                    "children": []
+                }]
+            }
+        ]
+    }
+}

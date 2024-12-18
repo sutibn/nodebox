@@ -1,0 +1,19 @@
+{
+    "models": [
+        {
+            "name": "lucy",
+            "obj": "./models/lucy.obj"
+        }
+    ],
+    "scenegraph": {
+        "name": "model_node",
+        "type": "model",
+        "content": "lucy",
+        "transformation": {
+            "translation": [0, 0, 0],
+            "rotation": [0, 90, 0],
+            "scale": [1, 1, 1]
+        },
+        "children": []
+    }
+}

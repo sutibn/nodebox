@@ -1,5 +1,3 @@
-import { loadFile } from './loader.js'
-
 class Shader {
     constructor(gl, _vert, _frag) {
         this.gl = gl
@@ -7,14 +5,14 @@ class Shader {
         let frag = gl.createShader(gl.FRAGMENT_SHADER)
         let prog = gl.createProgram()
 
-        gl.shaderSource(vert, loadFile(_vert))
+        gl.shaderSource(vert, _vert)
         gl.compileShader(vert)
-        if (!gl.getShaderParameter( vert, gl.COMPILE_STATUS)) {
+        if (!gl.getShaderParameter(vert, gl.COMPILE_STATUS)) {
             alert(`An error occurred compiling the shader: ${gl.getShaderInfoLog(vert)}`)
             gl.deleteShader(vert)
         } gl.attachShader(prog, vert)
 
-        gl.shaderSource(frag, loadFile(_frag))
+        gl.shaderSource(frag, _frag)
         gl.compileShader(frag)
         if (!gl.getShaderParameter(frag, gl.COMPILE_STATUS)) {
             alert(`An error occurred compiling the shader: ${gl.getShaderInfoLog(frag)}`)

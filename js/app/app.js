@@ -4,13 +4,16 @@ import WebGL from './webgl.js'
 import Input from '../utils/input.js'
 import Shader from '../utils/shader.js'
 
+import vertSrc from '../shader/vert.glsl.js';
+import fragSrc from '../shader/frag.glsl.js';
+
 class App {
     constructor() {
         this.canvas = document.getElementById('canvas')
         this.canvas.addEventListener('contextmenu', e => e.preventDefault())
 
         this.gl = this.init()
-        this.shader = new Shader(this.gl, '../../shader/vert.glsl', '../../shader/frag.glsl')
+        this.shader = new Shader(this.gl, vertSrc, fragSrc)
 
         this.resize()
         this.w = this.canvas.width

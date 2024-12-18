@@ -1,0 +1,19 @@
+{
+    "models": [
+        {
+            "name": "planck",
+            "obj": "./models/planck.obj"
+        }
+    ],
+    "scenegraph": {
+        "name": "model_node",
+        "type": "model",
+        "content": "planck",
+        "transformation": {
+            "translation": [0, 0, 0],
+            "rotation": [0, 0, 0],
+            "scale": [1, 1, 1]
+        },
+        "children": []
+    }
+}

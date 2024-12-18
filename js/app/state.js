@@ -1,19 +1,58 @@
 'use strict'
-import Input from "../util/input.js"
+import Input from '../utils/input.js'
 
 class State {
     constructor() {
         this.column = {
-            "Canvas": {
-                "Clear Canvas": document.getElementById("clearCanvas"),                
+            'Mode': {
+                'Point':    document.getElementById('modeDot'),
+                'Triangle': document.getElementById('modeTri')
             },
+
+            'Control': {
+                'Camera': document.getElementById('controlCamera'),
+                'Node':   document.getElementById('controlNode')
+            },
+
+            'Select': document.getElementById('selectNode'),
+            'Scene':  document.getElementById('openfileActionInput')
         }
 
         this.state = {
-            "Canvas": ""
+            'Mode':    '',
+            'Control': '',
+            'Select':  '',
         }
 
-        this.updateUI("Canvas", "")
+        this.updateUI('Mode', 'Point')
+        this.updateUI('Control', 'Camera')
+
+        this.column['Select'].onchange = () => {
+            this.state['Select'] = this.column['Select'].value
+        }
+
+        this.onOpen3DSceneCallback = null
+        this.column['Scene'].onchange = (e) => {
+            if (this.onOpen3DSceneCallback == null)
+                return
+            
+            let scene = this.onOpen3DSceneCallback(e.target.files[0].name)
+            this.column['Select'].innerHTML = ''
+            for (let node of scene.getNodes()) {
+                let option = document.createElement('option')
+                option.value = node.name
+                option.innerHTML = node.name
+                this.column['Select'].appendChild(option)
+            }
+
+            this.column['Select'].removeAttribute('disabled')
+            this.column['Select'].value = this.column['Select'].getElementsByTagName('option')[0].value
+            this.state['Select'] = this.column['Select'].value
+        }
+    }
+
+    onOpen3DScene(callback) {
+        this.onOpen3DSceneCallback = callback
     }
 
     getState(name) {
@@ -21,10 +60,14 @@ class State {
     }
 
     update() {
-        if (Input.isKeyDown("x"))
-            this.updateUI("Canvas", "Clear Canvas")
+        if (Input.isKeyPress('1'))
+            this.updateUI('Mode', 'Point')
+        else if (Input.isKeyPress('2'))
+            this.updateUI('Mode', 'Triangle')
+        if (Input.isKeyDown('q') || Input.isKeyDown('Q'))
+            this.updateUI('Control', 'Node')
         else
-            this.updateUI("Canvas", "")
+            this.updateUI('Control', 'Camera')
     }
 
     updateUI(col, name, val = null) {
@@ -33,10 +76,10 @@ class State {
             this.updateElement(this.column[col][key], key == name, val)
     }
 
-    updateElement(ele, st, val) {
-        ele.classList.remove(st ? "inactive" : "active")
-        ele.classList.add(st ? "active" : "inactive")
-        if (st && val != null)
+    updateElement(ele, state, val) {
+        ele.classList.remove(state ? 'inactive' : 'active')
+        ele.classList.add(state ? 'active' : 'inactive')
+        if (state && val != null)
             ele.innerHTML = val
     }
 }

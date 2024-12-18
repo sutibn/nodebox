@@ -1,27 +1,32 @@
 'use strict'
-import State from "./state.js"
-import Input from "../util/input.js"
-import Shader from "../util/shader.js"
-import { WebGLApp } from "../../object.js"
+import State from './state.js'
+import WebGL from './webgl.js'
+import Input from '../utils/input.js'
+import Shader from '../utils/shader.js'
 
 class App {
     constructor() {
-        this.impl = new WebGLApp()
-        this.canvas = document.getElementById("canvas")
-        this.canvas.addEventListener(
-            "contextmenu", event => event.preventDefault())
+        this.canvas = document.getElementById('canvas')
+        this.canvas.addEventListener('contextmenu', e => e.preventDefault())
+
         this.gl = this.init()
-        this.shader = new Shader(this.gl,
-            "../../shader/vert.glsl", "../../shader/frag.glsl")
+        this.shader = new Shader(this.gl, '../../shader/vert.glsl', '../../shader/frag.glsl')
+
         this.resize()
         this.w = this.canvas.width
         this.h = this.canvas.height
         window.onresize = this.resize.bind(this)
-        this.appstate = new State()
+
+        this.tick = Date.now() / 1000.0
+        this.delta = 0
+
+        this.state = new State()
+        this.impl = new WebGL(this.gl, this.shader, this.state)
     }
 
     init() {
-        return this.impl.init()
+        let canvas = document.getElementById('canvas')
+        return canvas.getContext('webgl2')
     }
 
     resize() {
@@ -34,25 +39,18 @@ class App {
     }
 
     update() {
-        this.appstate.update()
-        if (Input.isMouseClick(0)) {
-            let scaleX = (this.w / this.canvas.width)
-            let scaleY = (this.h / this.canvas.height)
-            let pos = [Input.mouseX * scaleX, Input.mouseY * scaleY]
-            let len = this.w / 15 * Math.sqrt(2)
-            this.impl.addTriangle(this.gl, this.shader, pos, len)
-        }
+        this.delta = (Date.now() / 1000.0) - this.tick
+        this.tick  =  Date.now() / 1000.0
 
-        if (this.appstate.getState('Canvas') == "Clear Canvas")
-            this.impl.clearShapes()
+        this.state.update()
         Input.update()
+        this.impl.update(this.gl, this.state, this.delta)
+
         this.render()
         requestAnimationFrame(() => { this.update() })
     }
 
     render() {
-        this.shader.use()
-        this.shader.setUniform2f("u_resolution", new Float32Array([this.w, this.h]))
         this.impl.render(this.gl, this.canvas.width, this.canvas.height)
     }
 }

@@ -23,7 +23,7 @@
         },
         "children": [
             {
-                "name": "platforn_node",
+                "name": "platform_node",
                 "type": "model",
                 "content": "platform",
                 "transformation": {

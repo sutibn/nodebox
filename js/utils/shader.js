@@ -1,20 +1,20 @@
-import { loadFile } from "./helper.js"
+import { loadFile } from './loader.js'
 
 class Shader {
-    constructor(gl, vertex, fragment) {
+    constructor(gl, _vert, _frag) {
         this.gl = gl
         let vert = gl.createShader(gl.VERTEX_SHADER)
         let frag = gl.createShader(gl.FRAGMENT_SHADER)
         let prog = gl.createProgram()
 
-        gl.shaderSource(vert, loadFile(vertex))
+        gl.shaderSource(vert, loadFile(_vert))
         gl.compileShader(vert)
-        if (!gl.getShaderParameter(vert, gl.COMPILE_STATUS)) {
+        if (!gl.getShaderParameter( vert, gl.COMPILE_STATUS)) {
             alert(`An error occurred compiling the shader: ${gl.getShaderInfoLog(vert)}`)
             gl.deleteShader(vert)
         } gl.attachShader(prog, vert)
-        
-        gl.shaderSource(frag, loadFile(fragment))
+
+        gl.shaderSource(frag, loadFile(_frag))
         gl.compileShader(frag)
         if (!gl.getShaderParameter(frag, gl.COMPILE_STATUS)) {
             alert(`An error occurred compiling the shader: ${gl.getShaderInfoLog(frag)}`)
@@ -23,13 +23,19 @@ class Shader {
 
         gl.linkProgram(prog)
         if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
-            alert(`Unable to initialize the shader program: ${gl.getProgramInfoLog(prog)}`)
+            alert( `Unable to initialize the shader program: ${gl.getProgramInfoLog(prog)}` )
             gl.deleteProgram(prog)
-        } this.program = prog
+        }
+
+        this.program = prog
     }
 
     use() {
         this.gl.useProgram(this.program)
+    }
+
+    unuse() {
+        this.gl.useProgram(null)
     }
 
     getAttributeLocation(name) {
@@ -60,11 +66,11 @@ class Shader {
         this.gl.uniformMatrix4fv(this.getUniformLocation(name), false, val)
     }
 
-    setArrayBuffer(name, buf, n, stride = 0, offset = 0) {
+    setArrayBuffer(name, buf, n, step = 0, off = 0) {
         const loc = this.getAttributeLocation(name)
         this.gl.enableVertexAttribArray(loc)
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, buf)
-        this.gl.vertexAttribPointer(loc, n, this.gl.FLOAT, false, stride, offset)
+        this.gl.vertexAttribPointer(loc, n, this.gl.FLOAT, false, step, off)
     }
 }
 

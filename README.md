@@ -1,7 +1,7 @@
 <p align="center">
-    <img src='./images/logo.png?'>
+    <img src='./images/logo.png'>
 </p>
 
 <p align="center">
-    <img src='./images/preview.png?'>
+    <img src='./images/preview.png'>
 </p>
